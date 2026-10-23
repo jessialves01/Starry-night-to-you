@@ -3,101 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Starry Night for Kris 🌌</title>
+    <title>A Starry Night for Kris 🌌</title>
     <style>
-        body {
-            background-color: #030712;
-            color: #38bdf8;
-            font-family: 'Courier New', Courier, monospace;
+        body, html {
             margin: 0;
-            padding: 15px;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #030712;
+            overflow: hidden;
+            font-family: 'Courier New', Courier, monospace;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            overflow-x: hidden;
+            justify-content: space-between;
         }
 
-        /* Efeito de partículas de estrelas cintilantes no fundo */
-        .stars-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            background-image: radial-gradient(white 1px, transparent 0);
-            background-size: 40px 40px;
-            opacity: 0.15;
-            animation: twinkle 4s infinite linear;
-        }
-        @keyframes twinkle {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-40px); }
-        }
-
-        .terminal-card {
+        /* O canvas onde as estrelas e a arte se formam */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 480px;
-            background: #0f172a;
-            border: 1px solid #1e293b;
-            border-radius: 12px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-            overflow: hidden;
-            z-index: 2;
+            height: 100%;
+            z-index: 1;
         }
 
-        .terminal-header {
-            background: #1e293b;
-            padding: 10px 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-        .red { background: #ef4444; }
-        .yellow { background: #f59e0b; }
-        .green { background: #10b981; }
-        .title { color: #94a3b8; font-size: 0.8rem; margin-left: 5px; }
-
-        .content {
-            padding: 20px;
-            text-align: center;
-        }
-
-        /* Vídeo animado / GIF da Noite Estrelada se mexendo */
-        .video-container {
-            width: 100%;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 2px solid #f59e0b;
-            box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
-            margin-bottom: 15px;
+        /* Elementos de texto flutuantes no topo e embaixo */
+        .header-content {
             position: relative;
-        }
-        .video-container iframe, .video-container img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            display: block;
+            z-index: 2;
+            margin-top: 30px;
+            text-align: center;
+            pointer-events: none;
         }
 
-        /* Nome do Kris em destaque */
         h1 {
             color: #facc15;
-            font-size: 1.5rem;
-            margin: 10px 0 5px 0;
-            text-shadow: 0 0 10px rgba(250, 204, 21, 0.4);
+            font-size: 1.6rem;
+            margin: 0;
+            text-shadow: 0 0 15px rgba(250, 204, 21, 0.6);
+            letter-spacing: 2px;
         }
 
-        .subtitle {
-            color: #e2e8f0;
+        .footer-content {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 35px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        p.quote {
+            color: #38bdf8;
             font-size: 0.95rem;
-            line-height: 1.4;
+            line-height: 1.5;
             margin-bottom: 20px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+            background: rgba(3, 7, 18, 0.7);
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
         }
 
         /* Botão interativo futurista */
-        .btn-matrix {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
+        .btn-surprise {
+            background: linear-gradient(135deg, #facc15, #d97706);
             color: #030712;
             border: none;
             padding: 12px 24px;
@@ -106,20 +78,18 @@
             border-radius: 25px;
             cursor: pointer;
             font-family: 'Courier New', Courier, monospace;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            width: 100%;
+            box-shadow: 0 4px 20px rgba(250, 204, 21, 0.4);
             transition: transform 0.2s;
+            pointer-events: auto;
         }
-        .btn-matrix:active {
-            transform: scale(0.97);
-        }
+        .btn-surprise:active { transform: scale(0.95); }
 
         /* Modal Secreta */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(3, 7, 18, 0.9);
+            background: rgba(3, 7, 18, 0.85);
             justify-content: center;
             align-items: center;
             padding: 20px;
@@ -132,7 +102,7 @@
             padding: 25px;
             border-radius: 12px;
             text-align: center;
-            max-width: 320px;
+            max-width: 300px;
             box-shadow: 0 0 30px rgba(250, 204, 21, 0.3);
         }
         .modal-box p {
@@ -155,30 +125,18 @@
 </head>
 <body>
 
-    <div class="stars-bg"></div>
+    <canvas id="starryCanvas"></canvas>
 
-    <div class="terminal-card">
-        <div class="terminal-header">
-            <span class="dot red"></span>
-            <span class="dot yellow"></span>
-            <span class="dot green"></span>
-            <span class="title">for_kris.py — execution</span>
-        </div>
-
-        <div class="content">
-            <!-- Imagem animada / GIF em loop da Noite Estrelada se mexendo com brilhos -->
-            <div class="video-container">
-                <img src="https://media.giphy.com/media/xT9IgusjDu61h6eR6w/giphy.gif" alt="Starry Night Animated">
-            </div>
-
-            <h1>FOR KRIS 🌌</h1>
-            <p class="subtitle">May the stars light up your path wherever you go.</p>
-
-            <button class="btn-matrix" onclick="openModal()">Click for a compiler surprise ✨</button>
-        </div>
+    <div class="header-content">
+        <h1>FOR KRIS 🌌</h1>
     </div>
 
-    <!-- Modal Interativa -->
+    <div class="footer-content">
+        <p class="quote">"May the stars light up your path wherever you go." ✨</p>
+        <button class="btn-surprise" onclick="openModal()">Click for a secret 💫</button>
+    </div>
+
+    <!-- Modal Secreta -->
     <div id="secretModal" class="modal">
         <div class="modal-box">
             <p>They say stars shine brighter when you're around the right person... 💫<br><br>*(Compiled specially for you!)*</p>
@@ -187,11 +145,82 @@
     </div>
 
     <script>
+        const canvas = document.getElementById('starryCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // Paleta de cores de Van Gogh (azuis profundos, dourados e amarelos estelares)
+        const colors = ['#1d4ed8', '#3b82f6', '#0284c7', '#facc15', '#f59e0b', '#fbbf24', '#ffffff'];
+
+        // Criar partículas que voam e formam o efeito
+        let particles = [];
+        const numParticles = window.innerWidth < 600 ? 120 : 250;
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 1.5;
+                this.vy = (Math.random() - 0.5) * 1.5;
+                this.size = Math.random() * 2.5 + 1;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.alpha = Math.random() * 0.8 + 0.2;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Efeito de redemoinho suave estilo Van Gogh
+                this.vx += Math.sin(this.y * 0.01) * 0.02;
+                this.vy += Math.cos(this.x * 0.01) * 0.02;
+
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < numParticles; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.fillStyle = 'rgba(3, 7, 18, 0.15)'; // Rastro suave de movimento
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // Funções da Modal
         function openModal() {
             document.getElementById('secretModal').style.display = 'flex';
         }
         function closeModal() {
-            document.getElementById('secretModal').style.display = 'none';
+            document.getElementById('secretManager' || 'secretModal').style.display = 'none';
         }
     </script>
 
