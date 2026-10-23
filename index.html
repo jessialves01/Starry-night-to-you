@@ -50,13 +50,6 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.7);
             text-align: center;
         }
-        .art-container {
-            width: 100%;
-            overflow: hidden;
-            border-radius: 4px;
-            background: #050b18;
-            padding: 5px;
-        }
         .code-load {
             font-size: 0.75rem;
             color: #3b82f6;
@@ -64,6 +57,29 @@
             margin-bottom: 10px;
             opacity: 0.8;
         }
+        /* Caixa da Arte em Código (ASCII / Matrix) */
+        .ascii-container {
+            background-color: #030712;
+            border: 1px solid #1e2952;
+            border-radius: 6px;
+            padding: 10px;
+            overflow-x: auto;
+            text-align: left;
+            white-space: pre;
+            font-size: 5px; /* Tamanho perfeito para formar o desenho no celular */
+            line-height: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #2e5bbf;
+            max-height: 380px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.9);
+        }
+        /* Cores dos códigos para destacar as estrelas e a noite */
+        .c-gold { color: #f1c40f; }
+        .c-yellow { color: #f39c12; }
+        .c-cyan { color: #00d2d3; }
+        .c-blue { color: #3742fa; }
+        .c-light { color: #ced6e0; }
+
         .btn {
             background-color: #f1c40f;
             color: #050b18;
@@ -124,11 +140,83 @@
     </div>
 
     <div class="terminal-body">
-        <div class="code-load" id="codeLog">Initializing script... loading pixels & matrix mapping...</div>
+        <div class="code-load" id="codeLog">Initializing script... mapping pixel matrix...</div>
         
-        <div class="art-container">
-            <!-- Adicionado referrerpolicy para carregar a imagem sem bloqueio -->
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/800px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" referrerpolicy="no-referrer" style="width: 100%; border-radius: 4px; filter: contrast(120%) brightness(90%) hue-rotate(10deg);" alt="Starry Night">
+        <!-- O desenho formado inteiramente por códigos e caracteres -->
+        <div class="ascii-container" id="asciiArt">
+<span class="c-blue">import</span> sys, math, time; <span class="c-cyan">from</span> PIL <span class="c-cyan">import</span> Image
+<span class="c-blue">def</span> <span class="c-light">render_starry_night</span>():
+    matrix = [[<span class="c-gold">"//~~"</span>, <span class="c-yellow">"===="</span>, <span class="c-blue">"0x00"</span>] <span class="c-blue">for</span> i <span class="c-blue">in</span> range(<span class="c-cyan">60</span>)]
+    <span class="c-blue">print</span>(<span class="c-gold">"✨ Loading Van Gogh coordinates..."</span>)
+    
+    <span class="c-light"># Cypress & Swirls mapping</span>
+    <span class="c-blue">for</span> y <span class="c-blue">in</span> range(<span class="c-cyan">45</span>):
+        line = <span class="c-gold">""</span>
+        <span class="c-blue">for</span> x <span class="c-blue">in</span> range(<span class="c-cyan">80</span>):
+            val = (math.sin(x/<span class="c-cyan">5</span>) + math.cos(y/<span class="c-cyan">5</span>)) * <span class="c-cyan">10</span>
+            <span class="c-blue">if</span> val &gt; <span class="c-cyan">8</span>:
+                line += <span class="c-gold">"★"</span>
+            <span class="c-blue">elif</span> val &gt; <span class="c-cyan">2</span>:
+                line += <span class="c-yellow">"~#"</span>
+            <span class="c-blue">elif</span> val &gt; <span class="c-cyan">-2</span>:
+                line += <span class="c-cyan">"//_"</span>
+            <span class="c-blue">else</span>:
+                line += <span class="c-blue">"[]"</span>
+        <span class="c-blue">print</span>(line)
+
+<span class="c-light"># ────────────────────────────────────────────────────────────────</span>
+<span class="c-light"># [CYPRESS TREE - DARK FOREGROUND]</span>
+<span class="c-blue">def</span> <span class="c-light">draw_cypress</span>():
+    tree = [
+        <span class="c-blue">"                vvvvvvv                 "</span>,
+        <span class="c-blue">"             vVVVVVVVVVVv               "</span>,
+        <span class="c-blue">"           vVVV###VVVVV###VVv           "</span>,
+        <span class="c-blue">"         vVV#####VVVVV#####VVv          "</span>,
+        <span class="c-blue">"        vVV#######VVVV#######VVv        "</span>,
+        <span class="c-blue">"       vVV#########VV#########VVv       "</span>,
+        <span class="c-blue">"       vVV##########V##########VVv      "</span>,
+        <span class="c-blue">"        vVV###################VVv       "</span>,
+        <span class="c-blue">"         vVV#################VVv        "</span>,
+        <span class="c-blue">"          vVV###############VVv         "</span>,
+        <span class="c-blue">"           vVV#############VVv          "</span>,
+        <span class="c-blue">"            vVV###########VVv           "</span>,
+        <span class="c-blue">"             vVV#########VVv            "</span>,
+        <span class="c-blue">"              vVV#######VVv             "</span>,
+        <span class="c-blue">"               vVV#####VVv              "</span>,
+        <span class="c-blue">"                vVV###VVv               "</span>,
+        <span class="c-blue">"                 vVV#VVv                "</span>,
+        <span class="c-blue">"                  vVVVv                 "</span>,
+        <span class="c-blue">"                   VVV                  "</span>,
+        <span class="c-blue">"                   |||                  "</span>,
+        <span class="c-blue">"                   |||                  "</span>
+    ]
+    <span class="c-blue">return</span> tree
+
+<span class="c-light"># ────────────────────────────────────────────────────────────────</span>
+<span class="c-light"># [STARS & SWIRLS MATRIX MAPPING]</span>
+<span class="c-cyan">PIXELS</span> = [
+    <span class="c-gold">"~//~==0x7F~~//~~==0x7F~~//~~==0x7F~~//~~==0x7F~~//~~==0x7F~~"</span>,
+    <span class="c-gold">"~~//~~==0x7F~~//~~==0x7F~~//~~==0x7F~~//~~==0x7F~~//~~==0x7F~~"</span>,
+    <span class="c-blue">"__//__//__//__//__//__//__//__//__//__//__//__//__//__//__/__"</span>,
+    <span class="c-blue">"==0xCC==0xCC==0xCC==0xCC==0xCC==0xCC==0xCC==0xCC==0xCC==0xCC=="</span>,
+    <span class="c-cyan">"//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//"</span>,
+    <span class="c-gold">"    ★ ✨ 🌟 SWIRL_1 = math.cos(theta) * 0.89 [STARRY NIGHT]    "</span>,
+    <span class="c-blue">"//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//"</span>,
+    <span class="c-cyan">"==0xFF==0xFF==0xFF==0xFF==0xFF==0xFF==0xFF==0xFF==0xFF==0xFF=="</span>,
+    <span class="c-blue">"__//__//__//__//__//__//__//__//__//__//__//__//__//__//__/__"</span>,
+    <span class="c-gold">"~//~==0x7F~~//~~==0x7F~~//~~==0x7F~~//~~==0x7F~~//~~==0x7F~~"</span>,
+    <span class="c-gold">"    ★ ✨ 🌟 SWIRL_2 = math.sin(phi) * 1.42 [VAN GOGH SKY]     "</span>,
+    <span class="c-blue">"==0xAA==0xAA==0xAA==0xAA==0xAA==0xAA==0xAA==0xAA==0xAA==0xAA=="</span>,
+    <span class="c-cyan">"//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//"</span>,
+    <span class="c-blue">"__//__//__//__//__//__//__//__//__//__//__//__//__//__//__/__"</span>,
+    <span class="c-gold">"~//~==0x7F~~//~~==0x7F~~//~~==0x7F~~//~~==0x7F~~//~~==0x7F~~"</span>,
+    <span class="c-cyan">"==0xBB==0xBB==0xBB==0xBB==0xBB==0xBB==0xBB==0xBB==0xBB==0xBB=="</span>,
+    <span class="c-blue">"//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//"</span>,
+    <span class="c-gold">"    ★ ✨ 🌟 BRIGHT_STAR = 0xFFD700 [CANVAS RENDERED]          "</span>,
+    <span class="c-blue">"__//__//__//__//__//__//__//__//__//__//__//__//__//__//__/__"</span>,
+    <span class="c-cyan">"~//~==0x7F~~//~~==0x7F~~//~~==0x7F~~//~~==0x7F~~//~~==0x7F~~"</span>,
+    <span class="c-blue">"==0xDD==0xDD==0xDD==0xDD==0xDD==0xDD==0xDD==0xDD==0xDD==0xDD=="</span>
+]
         </div>
 
         <button class="btn" onclick="openMessage()">Click for a surprise 🌠</button>
@@ -146,7 +234,7 @@
         const logs = [
             "Importing PIL and numpy...",
             "Mapping Van Gogh color spectrum...",
-            "Rendering matrix and variables...",
+            "Rendering ASCII matrix and variables...",
             "Starry Night script executed successfully! ✨"
         ];
         let i = 0;
