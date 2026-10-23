@@ -3,81 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Starry Night for You 🌌</title>
+    <title>Starry Night for Kris 🌌</title>
     <style>
-        /* Fundo azul-escuro profundo e elegante */
         body {
-            background-color: #0b132b; 
-            color: #ffffff;
-            font-family: 'Georgia', serif; /* Fonte mais clássica e romântica */
+            background-color: #030712;
+            color: #38bdf8;
+            font-family: 'Courier New', Courier, monospace;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Efeito de partículas de estrelas cintilantes no fundo */
+        .stars-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            background-image: radial-gradient(white 1px, transparent 0);
+            background-size: 40px 40px;
+            opacity: 0.15;
+            animation: twinkle 4s infinite linear;
+        }
+        @keyframes twinkle {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-40px); }
+        }
+
+        .terminal-card {
+            width: 100%;
+            max-width: 480px;
+            background: #0f172a;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .terminal-header {
+            background: #1e293b;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .red { background: #ef4444; }
+        .yellow { background: #f59e0b; }
+        .green { background: #10b981; }
+        .title { color: #94a3b8; font-size: 0.8rem; margin-left: 5px; }
+
+        .content {
+            padding: 20px;
             text-align: center;
         }
 
-        /* Container para a obra de arte */
-        .art-container {
+        /* Vídeo animado / GIF da Noite Estrelada se mexendo */
+        .video-container {
             width: 100%;
-            max-width: 550px; /* Tamanho bom para celular */
-            border-radius: 15px;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6); /* Sombra elegante */
-            border: 3px solid #f1c40f; /* Moldura dourada fina */
-            margin-bottom: 30px;
-            transition: transform 0.3s ease;
+            border: 2px solid #f59e0b;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+            margin-bottom: 15px;
+            position: relative;
         }
-        
-        /* Efeito ao passar o mouse/tocar */
-        .art-container:hover {
-            transform: scale(1.02);
-        }
-
-        /* A imagem de Van Gogh */
-        img {
+        .video-container iframe, .video-container img {
             width: 100%;
-            height: auto;
+            height: 220px;
+            object-fit: cover;
             display: block;
         }
 
-        /* A frase poética em inglês */
-        .message {
-            font-size: 1.4rem;
-            line-height: 1.6;
-            color: #f1c40f; /* Dourado suave para combinar com as estrelas */
-            max-width: 450px;
-            margin-top: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Sombra no texto */
-        }
-        
-        /* Uma pequena assinatura fofa no final */
-        .signature {
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.7);
-            margin-top: 40px;
-            font-style: italic;
+        /* Nome do Kris em destaque */
+        h1 {
+            color: #facc15;
+            font-size: 1.5rem;
+            margin: 10px 0 5px 0;
+            text-shadow: 0 0 10px rgba(250, 204, 21, 0.4);
         }
 
+        .subtitle {
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        /* Botão interativo futurista */
+        .btn-matrix {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #030712;
+            border: none;
+            padding: 12px 24px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            width: 100%;
+            transition: transform 0.2s;
+        }
+        .btn-matrix:active {
+            transform: scale(0.97);
+        }
+
+        /* Modal Secreta */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3, 7, 18, 0.9);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+        .modal-box {
+            background: #0f172a;
+            border: 2px solid #facc15;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 320px;
+            box-shadow: 0 0 30px rgba(250, 204, 21, 0.3);
+        }
+        .modal-box p {
+            color: #f8fafc;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .close-btn {
+            background: #facc15;
+            color: #030712;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+        }
     </style>
 </head>
 <body>
 
-    <div class="art-container">
-        <!-- Usando a imagem oficial e de alta qualidade do Wikimedia -->
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/1280px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" alt="Starry Night by Van Gogh">
+    <div class="stars-bg"></div>
+
+    <div class="terminal-card">
+        <div class="terminal-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="title">for_kris.py — execution</span>
+        </div>
+
+        <div class="content">
+            <!-- Imagem animada / GIF em loop da Noite Estrelada se mexendo com brilhos -->
+            <div class="video-container">
+                <img src="https://media.giphy.com/media/xT9IgusjDu61h6eR6w/giphy.gif" alt="Starry Night Animated">
+            </div>
+
+            <h1>FOR KRIS 🌌</h1>
+            <p class="subtitle">May the stars light up your path wherever you go.</p>
+
+            <button class="btn-matrix" onclick="openModal()">Click for a compiler surprise ✨</button>
+        </div>
     </div>
 
-    <!-- A mensagem que você pediu em inglês -->
-    <p class="message">
-        May the stars light up your night.<br>
-        Thinking of you 💫
-    </p>
+    <!-- Modal Interativa -->
+    <div id="secretModal" class="modal">
+        <div class="modal-box">
+            <p>They say stars shine brighter when you're around the right person... 💫<br><br>*(Compiled specially for you!)*</p>
+            <button class="close-btn" onclick="closeModal()">Close 💙</button>
+        </div>
+    </div>
 
-    <p class="signature">Compiled with 💙</p>
+    <script>
+        function openModal() {
+            document.getElementById('secretModal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('secretModal').style.display = 'none';
+        }
+    </script>
 
 </body>
 </html>
