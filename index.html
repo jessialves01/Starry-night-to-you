@@ -56,21 +56,6 @@
             border-radius: 4px;
             background: #050b18;
             padding: 5px;
-            position: relative;
-        }
-        /* Efeito visual imitando a arte em caracteres/código da foto */
-        .ascii-art {
-            font-size: 6px;
-            line-height: 6px;
-            letter-spacing: 0px;
-            white-space: pre;
-            color: #4a88e2;
-            text-align: left;
-            overflow-x: auto;
-            max-height: 350px;
-        }
-        .ascii-art span {
-            color: #f1c40f; /* Detalhes dourados das estrelas */
         }
         .code-load {
             font-size: 0.75rem;
@@ -91,11 +76,7 @@
             margin-top: 20px;
             font-family: 'Courier New', Courier, monospace;
             box-shadow: 0 4px 15px rgba(241, 196, 15, 0.3);
-            transition: transform 0.2s;
         }
-        .btn:active { transform: scale(0.95); }
-        
-        /* Modal da mensagem secreta em inglês */
         .modal {
             display: none;
             position: fixed;
@@ -146,8 +127,8 @@
         <div class="code-load" id="codeLog">Initializing script... loading pixels & matrix mapping...</div>
         
         <div class="art-container">
-            <!-- Imagem estilizada da Noite Estrelada com tom de código/pixelado -->
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/800px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" style="width: 100%; border-radius: 4px; filter: contrast(120%) brightness(90%) hue-rotate(10deg);" alt="Starry Night">
+            <!-- Adicionado referrerpolicy para carregar a imagem sem bloqueio -->
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/800px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" referrerpolicy="no-referrer" style="width: 100%; border-radius: 4px; filter: contrast(120%) brightness(90%) hue-rotate(10deg);" alt="Starry Night">
         </div>
 
         <button class="btn" onclick="openMessage()">Click for a surprise 🌠</button>
@@ -162,7 +143,6 @@
     </div>
 
     <script>
-        // Pequena animação de texto simulando o terminal compilando
         const logs = [
             "Importing PIL and numpy...",
             "Mapping Van Gogh color spectrum...",
